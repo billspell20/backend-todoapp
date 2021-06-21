@@ -6,7 +6,7 @@ const app = express();
 const todoRoutes = express.Router();
 const PORT = 5000;
 var path = require('path');
-
+var dotenv = require('dotenv').config()
 
 let Todo = require('./todo.model');
 
@@ -18,7 +18,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-const ATLAS_URI = "mongodb://127.0.0.1:27017/todos";
+const ATLAS_URI = process.env.URI;
 mongoose.connect(ATLAS_URI, { useNewUrlParser: true });
 const connection = mongoose.connection;
 connection.once('open', _ => {
