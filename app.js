@@ -1,16 +1,16 @@
-
+const cors = require('cors');
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
 const todoRoutes = express.Router();
-const PORT = 5000;
+const PORT = 4000;
 var path = require('path');
 var dotenv = require('dotenv').config()
 
 let Todo = require('./todo.model');
 
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
