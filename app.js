@@ -7,6 +7,8 @@ const todoRoutes = express.Router();
 const PORT = 4000;
 var path = require('path');
 var dotenv = require('dotenv').config()
+var firebase = require('firebase');
+var firebaseui = require('firebaseui');
 
 let Todo = require('./todo.model');
 
