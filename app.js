@@ -30,7 +30,7 @@ connection.on("error", console.error.bind(console, "mongo connection error"));
 
 // Original routes
 
-todoRoutes.route('/:useruid/').get(function(req, res) {
+todoRoutes.route('/:useruid').get(function(req, res) {
     Todo.find(function(err, todos) {
         if (err) {
             console.log(err);
@@ -47,7 +47,7 @@ todoRoutes.route('/:useruid/:id').get(function(req, res) {
     });
 });
 
-todoRoutes.route('/:useruid/update/:id').post(function(req, res) {
+todoRoutes.route('/update/:useruid/:id').post(function(req, res) {
     Todo.findById(req.params.id, function(err, todo) {
         if (!todo)
             res.status(404).send("data is not found");
@@ -65,7 +65,7 @@ todoRoutes.route('/:useruid/update/:id').post(function(req, res) {
     });
 });
 
-todoRoutes.route('/:useruid/add').post(function(req, res) {
+todoRoutes.route('/add/:useruid').post(function(req, res) {
     let todo = new Todo(req.body);
     todo.save()
         .then(todo => {
@@ -76,7 +76,7 @@ todoRoutes.route('/:useruid/add').post(function(req, res) {
         });
 });
 
-todoRoutes.route('/:useruid/delete/:id').delete((req, res, next) => {
+todoRoutes.route('/delete/:useruid/:id').delete((req, res, next) => {
     Todo.findByIdAndRemove(req.params.id, (error, data) => {
       if (!data) {
         return next(error);
