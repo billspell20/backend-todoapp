@@ -47,7 +47,7 @@ todoRoutes.route('/:useruid/:id').get(function(req, res) {
     });
 });
 
-todoRoutes.route('/update/:useruid/:id').post(function(req, res) {
+todoRoutes.route('/update/:id').post(function(req, res) {
     Todo.findById(req.params.id, function(err, todo) {
         if (!todo)
             res.status(404).send("data is not found");
@@ -76,7 +76,7 @@ todoRoutes.route('/add/:useruid').post(function(req, res) {
         });
 });
 
-todoRoutes.route('/delete/:useruid/:id').delete((req, res, next) => {
+todoRoutes.route('/delete/:id').delete((req, res, next) => {
     Todo.findByIdAndRemove(req.params.id, (error, data) => {
       if (!data) {
         return next(error);
