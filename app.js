@@ -26,12 +26,19 @@ connection.once('open', _ => {
     console.log('Database connected:', ATLAS_URI)
   })
 connection.on("error", console.error.bind(console, "mongo connection error"));
-
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      var useruid = user.uid;
+      console.log(useruid)
+    } else {
+      console.log("no id");
+    }
+});
 
 // Original routes
 
 todoRoutes.route('/:useruid').get(function(req, res) {
-    Todo.find(function(err, todos) {
+    Todo.useruid.find(function(err, todos) {
         if (err) {
             console.log(err);
         } else {
@@ -42,13 +49,13 @@ todoRoutes.route('/:useruid').get(function(req, res) {
 
 todoRoutes.route('/:useruid/:id').get(function(req, res) {
     let id = req.params.id;
-    Todo.findById(id, function(err, todo) {
+    Todo.useruid.findById(id, function(err, todo) {
         res.json(todo);
     });
 });
 
 todoRoutes.route('/update/:id').post(function(req, res) {
-    Todo.findById(req.params.id, function(err, todo) {
+    Todo.useruid.findById(req.params.id, function(err, todo) {
         if (!todo)
             res.status(404).send("data is not found");
         else
@@ -66,7 +73,7 @@ todoRoutes.route('/update/:id').post(function(req, res) {
 });
 
 todoRoutes.route('/add/:useruid').post(function(req, res) {
-    let todo = new Todo(req.body);
+    let todo = new Todo.useruid(req.body);
     todo.save()
         .then(todo => {
             res.status(200).json({'todo': 'todo added successfully'});
@@ -77,7 +84,7 @@ todoRoutes.route('/add/:useruid').post(function(req, res) {
 });
 
 todoRoutes.route('/delete/:id').delete((req, res, next) => {
-    Todo.findByIdAndRemove(req.params.id, (error, data) => {
+    Todo.useruid.findByIdAndRemove(req.params.id, (error, data) => {
       if (!data) {
         return next(error);
       } else {
