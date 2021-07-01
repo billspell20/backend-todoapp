@@ -29,7 +29,7 @@ connection.on("error", console.error.bind(console, "mongo connection error"));
 
 // Original routes
 
-todoRoutes.route('/:useruid').get(function(req, res) {
+todoRoutes.route('/').get(function(req, res) {
     Todo.find(function(err, todos) {
         if (err) {
             console.log(err);
@@ -39,7 +39,7 @@ todoRoutes.route('/:useruid').get(function(req, res) {
     });
 });
 
-todoRoutes.route('/:useruid/:id').get(function(req, res) {
+todoRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
     Todo.findById(id, function(err, todo) {
         res.json(todo);
@@ -64,7 +64,7 @@ todoRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
-todoRoutes.route('/add/:useruid').post(function(req, res) {
+todoRoutes.route('/add').post(function(req, res) {
     let todo = new Todo(req.body);
     todo.save()
         .then(todo => {
