@@ -1,5 +1,6 @@
-var firebase = require('firebase');
+
 const mongoose = require('mongoose');
+
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       var useruid = user.uid;
