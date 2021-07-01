@@ -26,7 +26,14 @@ connection.once('open', _ => {
     console.log('Database connected:', ATLAS_URI)
   })
 connection.on("error", console.error.bind(console, "mongo connection error"));
-
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      var useruid = user.uid;
+      console.log(this.state.useruid)
+    } else {
+      console.log("no id");
+    }
+});
 
 // Original routes
 
