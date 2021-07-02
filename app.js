@@ -10,7 +10,6 @@ var dotenv = require('dotenv').config()
 
 
 let Todo = require('./todo.model');
-let UserId = require('./user');
 
 app.use(cors());
 app.use(bodyParser.json());
