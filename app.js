@@ -31,7 +31,7 @@ connection.on("error", console.error.bind(console, "mongo connection error"));
 
 todoRoutes.route('/list').get(function(req, res) {
     Todo.find({ user_id : user_id })
-    .find(function(err, todos) {
+    .exec(function(err, todos) {
         if (err) {
             console.log(err);
         } else {
