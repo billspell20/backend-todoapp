@@ -35,7 +35,7 @@ todoRoutes.route('/list').get(function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.json(todos);
+            res.render.json(todos);
         }
     });
 });
