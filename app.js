@@ -30,7 +30,7 @@ connection.on("error", console.error.bind(console, "mongo connection error"));
 // Original routes
 
 todoRoutes.route('/list/:user_id').get(function(req, res) {
-    Todo.find({ user_id : "UPfAa2xlhxW6pCwRyUDpOumxZBP2" }, (function(err, todos) {
+    Todo.find({ user_id : "UPfAa2xlhxW6pCwRyUDpOumxZBP2" }).toArray(function(err, todos) {
         if (err) {
             console.log(err);
         } else {
