@@ -27,6 +27,13 @@ connection.once('open', _ => {
   })
 connection.on("error", console.error.bind(console, "mongo connection error"));
 
+app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
+
 // Original routes
 
 todoRoutes.route('/list/:userid').get(function(req, res) {
