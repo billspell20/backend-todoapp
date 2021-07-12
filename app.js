@@ -96,6 +96,6 @@ app.listen(PORT, function() {
 });
 
 
-app.use('*', express.static(path.join(__dirname, "client", "build")))
+app.get('*', express.static(path.join(__dirname, "client", "build")))
 
 module.exports = app;
