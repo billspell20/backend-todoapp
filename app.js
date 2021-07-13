@@ -102,6 +102,7 @@ app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
 });
 
-app.use('*', express.static(path.join(__dirname, "client", "build", "index.html")))
+app.use('*', express.static(path.join(__dirname, 'build')));
+
 
 module.exports = app;
