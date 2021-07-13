@@ -40,7 +40,7 @@ todoRoutes.route('/list/:userid/').get(function(req, res) {
     let userid = req.params.userid;
     Todo.find({ user_id : userid },function(err, todos) {
         if (err) {
-            console.log(err.response);
+            console.log(err);
         } else {
             res.json(todos);
         }
@@ -68,6 +68,7 @@ todoRoutes.route('/update/:id/').post(function(req, res) {
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
+                console.log(err);
             });
     });
 });
@@ -80,6 +81,7 @@ todoRoutes.route('/add/').post(function(req, res) {
         })
         .catch(err => {
             res.status(400).send('adding new todo failed');
+            console.log(err)
         });
 });
 
