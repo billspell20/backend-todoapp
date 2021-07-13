@@ -40,7 +40,7 @@ todoRoutes.route('/list/:userid/').get(function(req, res) {
     let userid = req.params.userid;
     Todo.find({ user_id : userid },function(err, todos) {
         if (err) {
-            console.log(err);
+            console.log(err.response);
         } else {
             res.json(todos);
         }
