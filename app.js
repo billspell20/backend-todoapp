@@ -11,7 +11,7 @@ var dotenv = require('dotenv').config()
 
 let Todo = require('./todo.model');
 
-app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -29,7 +29,7 @@ connection.on("error", console.error.bind(console, "mongo connection error"));
 
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization, Access-Control-Allow-Origin, Access-Control-Allow-Headers');
      next();
 });
