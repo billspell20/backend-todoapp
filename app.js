@@ -27,15 +27,15 @@ connection.once('open', _ => {
   })
 connection.on("error", console.error.bind(console, "mongo connection error"));
 
-var whitelist = ['http://www.restaurant-list.com', 'http://restaurant-list.com'];
+var whitelist = ['http://www.restaurant-list.com', 'http://restaurant-list.com', 'https://www.restaurant-list.com', 'https://restaurant-list.com'];
 
 var corsOptions = {
 origin: function(origin, callback){
     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
     callback(null, originIsWhitelisted);
 },
-  methods:["GET", "POST", "DELETE"],
-  allowedHeaders:["Origin", "X-Requested-With", "Content-Type", "Accept"],
+  methods:["GET", "POST", "OPTIONS", "DELETE"],
+  allowedHeaders:["Origin", "X-Requested-With", "Content-Type", "Accept", '*'],
   maxAge:-1
 };
 
