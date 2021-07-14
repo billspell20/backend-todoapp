@@ -65,16 +65,16 @@ todoRoutes.route('/update/:id/').post(cors(corsOptions),function(req, res) {
         if (!todo)
             res.status(404).send("data is not found");
         else
-            todo.todo_description = req.body.todo_description;
-            todo.todo_priority = req.body.todo_priority;
-            todo.todo_completed = req.body.todo_completed;
+            todo.todo_description = req.todo_description;
+            todo.todo_priority = req.todo_priority;
+            todo.todo_completed = req.todo_completed;
 
             todo.save().then(todo => {
                 res.json('Todo updated!');
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
-                console.log(err.response.data);
+                console.log(err);
             });
     });
 });
