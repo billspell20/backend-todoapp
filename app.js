@@ -27,7 +27,7 @@ connection.once('open', _ => {
   })
 connection.on("error", console.error.bind(console, "mongo connection error"));
 
-var whitelist = ['https://www.restaurant-list.com', 'https://restaurant-list.com'];
+var whitelist = ['http://www.restaurant-list.com', 'http://restaurant-list.com'];
 
 var corsOptions = {
 origin: function(origin, callback){
