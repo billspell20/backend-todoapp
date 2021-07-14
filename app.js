@@ -34,7 +34,7 @@ origin: function(origin, callback){
     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
     callback(null, originIsWhitelisted);
 },
-  methods:["GET", "PUT", "POST", "DELETE"],
+  methods:["GET", "POST", "DELETE"],
   allowedHeaders:["Origin", "X-Requested-With", "Content-Type", "Accept"],
   maxAge:-1
 };
