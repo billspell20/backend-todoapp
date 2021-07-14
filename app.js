@@ -46,7 +46,7 @@ todoRoutes.route('/list/:userid/').get(cors(corsOptions),function(req, res) {
     let userid = req.params.userid;
     Todo.find({ user_id : userid },function(err, todos) {
         if (err) {
-            console.log('Error:', err.response);
+            console.log(err.response.data);
         } else {
             res.json(todos);
         }
@@ -74,7 +74,7 @@ todoRoutes.route('/update/:id/').post(cors(corsOptions),function(req, res) {
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
-                console.log('Error:', err.response);
+                console.log(err.response.data);
             });
     });
 });
@@ -87,7 +87,7 @@ todoRoutes.route('/add/').post(cors(corsOptions),function(req, res) {
         })
         .catch(err => {
             res.status(400).send('adding new todo failed');
-            console.log('Error:', err.response)
+            console.log(err.response.data)
         });
 });
 
