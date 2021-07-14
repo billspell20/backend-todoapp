@@ -11,7 +11,7 @@ var dotenv = require('dotenv').config()
 
 let Todo = require('./todo.model');
 
-app.use(cors({origin: true, credentials: true}));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -27,16 +27,22 @@ connection.once('open', _ => {
   })
 connection.on("error", console.error.bind(console, "mongo connection error"));
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-       next();
- });
+var whitelist = ['https://www.restaurant-list.com', 'https://restaurant-list.com'];
+
+var corsOptions = {
+origin: function(origin, callback){
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
+},
+  methods:["GET", "PUT", "POST", "DELETE"],
+  allowedHeaders:["Origin", "X-Requested-With", "Content-Type", "Accept"],
+  maxAge:-1
+};
+
 
 // Original routes
 
-todoRoutes.route('/list/:userid/').get(function(req, res) {
+todoRoutes.route('/list/:userid/').get(cors(corsOptions),function(req, res) {
     let userid = req.params.userid;
     Todo.find({ user_id : userid },function(err, todos) {
         if (err) {
@@ -47,14 +53,14 @@ todoRoutes.route('/list/:userid/').get(function(req, res) {
     });
 });
 
-todoRoutes.route('/:id/').get(function(req, res) {
+todoRoutes.route('/:id/').get(cors(corsOptions),function(req, res) {
     let id = req.params.id;
     Todo.findById(id, function(err, todo) {
         res.json(todo);
     });
 });
 
-todoRoutes.route('/update/:id/').post(function(req, res) {
+todoRoutes.route('/update/:id/').post(cors(corsOptions),function(req, res) {
     Todo.findById(req.params.id, function(err, todo) {
         if (!todo)
             res.status(404).send("data is not found");
@@ -73,7 +79,7 @@ todoRoutes.route('/update/:id/').post(function(req, res) {
     });
 });
 
-todoRoutes.route('/add/').post(function(req, res) {
+todoRoutes.route('/add/').post(cors(corsOptions),function(req, res) {
     let todo = new Todo(req.body);
     todo.save()
         .then(todo => {
@@ -85,7 +91,7 @@ todoRoutes.route('/add/').post(function(req, res) {
         });
 });
 
-todoRoutes.route('/delete/:id/').delete((req, res, next) => {
+todoRoutes.route('/delete/:id/').delete(cors(corsOptions),(req, res, next) => {
     Todo.findByIdAndRemove(req.params.id, (error, data) => {
       if (!data) {
         return next(error);
