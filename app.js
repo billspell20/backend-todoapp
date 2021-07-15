@@ -27,22 +27,11 @@ connection.once('open', _ => {
   })
 connection.on("error", console.error.bind(console, "mongo connection error"));
 
-var whitelist = ['http://www.restaurant-list.com', 'http://restaurant-list.com', 'https://www.restaurant-list.com', 'https://restaurant-list.com'];
-
-var corsOptions = {
-origin: function(origin, callback){
-    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-    callback(null, originIsWhitelisted);
-},
-  methods:["GET", "POST", "OPTIONS", "DELETE"],
-  allowedHeaders:["Origin", "X-Requested-With", "Content-Type", "Accept", '*'],
-  maxAge:-1
-};
 
 
 // Original routes
 
-todoRoutes.route('/list/:userid/').get(cors(corsOptions),function(req, res) {
+todoRoutes.route('/list/:userid/').get(function(req, res) {
     let userid = req.params.userid;
     Todo.find({ user_id : userid },function(err, todos) {
         if (err) {
@@ -53,14 +42,14 @@ todoRoutes.route('/list/:userid/').get(cors(corsOptions),function(req, res) {
     });
 });
 
-todoRoutes.route('/:id/').get(cors(corsOptions),function(req, res) {
+todoRoutes.route('/:id/').get(function(req, res) {
     let id = req.params.id;
     Todo.findById(id, function(err, todo) {
         res.json(todo);
     });
 });
 
-todoRoutes.route('/update/:id/').post(cors(corsOptions),function(req, res) {
+todoRoutes.route('/update/:id/').post(function(req, res) {
     Todo.findById(req.params.id, function(err, todo) {
         if (!todo)
             res.status(404).send("data is not found");
@@ -79,7 +68,7 @@ todoRoutes.route('/update/:id/').post(cors(corsOptions),function(req, res) {
     });
 });
 
-todoRoutes.route('/add/').post(cors(corsOptions),function(req, res) {
+todoRoutes.route('/add/').post(function(req, res) {
     let todo = new Todo(req.body);
     todo.save()
         .then(todo => {
@@ -91,7 +80,7 @@ todoRoutes.route('/add/').post(cors(corsOptions),function(req, res) {
         });
 });
 
-todoRoutes.route('/delete/:id/').delete(cors(corsOptions),(req, res, next) => {
+todoRoutes.route('/delete/:id/').delete((req, res, next) => {
     Todo.findByIdAndRemove(req.params.id, (error, data) => {
       if (!data) {
         return next(error);
