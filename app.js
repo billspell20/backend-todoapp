@@ -39,7 +39,7 @@ app.all('*', function(req, res, next) {
 
 todoRoutes.route('/list/:userid/').get(function(req, res) {
     res.header('Content-Type', 'application/json');
-    res.header('Access-Control-Allow-Origin': 'https://www.restaurant-list.com/');
+    res.header('Access-Control-Allow-Origin', 'https://www.restaurant-list.com/');
     let userid = req.params.userid;
     Todo.find({ user_id : userid },function(err, todos) {
         if (err) {
@@ -52,7 +52,7 @@ todoRoutes.route('/list/:userid/').get(function(req, res) {
 
 todoRoutes.route('/:id/').get(function(req, res) {
     res.header('Content-Type', 'application/json');
-    res.header('Access-Control-Allow-Origin': 'https://www.restaurant-list.com/');
+    res.header('Access-Control-Allow-Origin', 'https://www.restaurant-list.com/');
     let id = req.params.id;
     Todo.findById(id, function(err, todo) {
         res.json(todo);
@@ -61,7 +61,7 @@ todoRoutes.route('/:id/').get(function(req, res) {
 
 todoRoutes.route('/update/:id/').post(function(req, res) {
     res.header('Content-Type', 'application/json');
-    res.header('Access-Control-Allow-Origin': 'https://www.restaurant-list.com/');
+    res.header('Access-Control-Allow-Origin', 'https://www.restaurant-list.com/');
     Todo.findById(req.params.id, function(err, todo) {
         if (!todo)
             res.status(404).send("data is not found");
@@ -82,7 +82,7 @@ todoRoutes.route('/update/:id/').post(function(req, res) {
 
 todoRoutes.route('/add/').post(function(req, res) {
     res.header('Content-Type', 'application/json');
-    res.header('Access-Control-Allow-Origin': 'https://www.restaurant-list.com/');
+    res.header('Access-Control-Allow-Origin', 'https://www.restaurant-list.com/');
     let todo = new Todo(req.body);
     todo.save()
         .then(todo => {
@@ -96,7 +96,7 @@ todoRoutes.route('/add/').post(function(req, res) {
 
 todoRoutes.route('/delete/:id/').delete((req, res, next) => {
     res.header('Content-Type', 'application/json');
-    res.header('Access-Control-Allow-Origin': 'https://www.restaurant-list.com/');
+    res.header('Access-Control-Allow-Origin', 'https://www.restaurant-list.com/');
     Todo.findByIdAndRemove(req.params.id, (error, data) => {
       if (!data) {
         return next(error);
